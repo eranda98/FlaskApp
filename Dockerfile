@@ -1,9 +1,19 @@
-FROM python:3
+FROM python:3.9-slim
 
-WORKDIR /usr/app
 
-COPY . .
+# Working Directory
+WORKDIR /app
 
-RUN pip install -r requirements.txt
 
-CMD ["python", "app.py"]
+# Copy source code to working directory
+COPY . app.py /app/
+
+
+# Install packages from requirements.txt
+
+
+RUN pip install --no-cache-dir --upgrade pip &&\
+    pip install --no-cache-dir --trusted-host pypi.python.org -r requirements.txt
+
+
+CMD python app.py
